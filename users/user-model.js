@@ -2,37 +2,39 @@ const db = require("../data/dbConfig")
 const bcrypt = require ("bcryptjs")
 
 function findUsers() {
-    return db("users")
+    return db("users");
 }
 
 function findBy(filter) {
     return db("users")
         .where(filter)
-        .select("id", "username", "password")
+        .select("id", "username", "password");
 }
 
 function findUserById(id) {
-    return db("users").where({ id }).first()
+    return db("users").where({ id }).first();
 }
 
 async function addUser(user) {
-    user.password = await bcrypt.hash(user.password, 14)
+    const salt = await bcrypt.genSalt(14)
+    const hashedPass = await bcrypt.hash(user.password, salt)
+    user.password = hashedPass;
 
-    const [id] = await db("users").insert(user)
+    const [id] = await db("users").insert(user);
 
-    return findUserById(id)
+    return findUserById(id);
 }
 
 async function updateUser(id, changes) {
     await db("users")
         .where({ id })
-        .update(changes)
+        .update(changes);
 
-    return findById
+    return findById;
 }
 
 function removeUser(id) {
-    return db("users").where({ id }).del()
+    return db("users").where({ id }).del();
 }
 
 module.exports = {
