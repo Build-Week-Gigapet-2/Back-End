@@ -32,4 +32,17 @@ module.exports = {
       },
     },
   },
+
+  production: {
+    client: "sqlite3",
+    connection: {
+      filename: "./data/dbConfig.js"
+    },
+    migrations: {
+      directory: './data/migrations',
+    },
+    seeds: {
+      directory: './data/seeds',
+    },
+  },
 };
