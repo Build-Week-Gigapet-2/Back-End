@@ -1,5 +1,3 @@
-const date = Date.now();
-
 exports.seed = async (knex) => {
   await knex("children_food_item").insert([
     { child_id: 1, food_id: 1, unit_measurement: "cups", quantity: 1 },
