@@ -6,6 +6,7 @@ const morgan = require("morgan");
 
 const authRouter = require("../auth/auth-router");
 const usersRouter = require("../users/user-router");
+const foodRouter = require("../food/food-router");
 
 const authenticate = require("../auth/authenticate-middleware.js");
 const {
@@ -23,8 +24,9 @@ server.use(cors());
 server.use(morgan("dev"));
 server.use(express.json());
 
-server.use('/api/auth', checkUserExistance, usernameExists, authRouter);
-server.use('/api/users', authenticate(), usersRouter);
+server.use("/api/auth", checkUserExistance, usernameExists, authRouter);
+server.use("/api/users", authenticate(), usersRouter);
+server.use("/api/food", foodRouter);
 
 server.get('/', sanityCheck)
 server.use(wrongRoute)

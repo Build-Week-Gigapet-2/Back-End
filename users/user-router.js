@@ -1,5 +1,9 @@
-const router = require("express").Router();
-const usersModel = require("./user-model")
+const express = require("express")
+const usersModel = require("./user-model");
+const foodRouter = require("../food/food-router");
+const router = express.Router()
+
+router.use("/:id/food", foodRouter)
 
 router.get("/", async (req, res, next) => {
     try {
@@ -8,6 +12,28 @@ router.get("/", async (req, res, next) => {
         res.json(users)
     } catch(err) {
         next(err)
+    }
+})
+
+router.get("/:id", async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const user = await usersModel.findUserById(id)
+
+        res.status(200).json(user)
+    } catch(err) {
+        res.status(404).json({ message: "User not found"})
+    }
+})
+
+router.get("/:id/children", async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const children = await usersModel.findUserChildren(id)
+
+        res.status(200).json(children)
+    } catch(err) {
+        res.status(404).json({ message: "Children not found"})
     }
 })
 
