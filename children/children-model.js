@@ -6,7 +6,7 @@ function findUserChildren(user_id) {
 
     return db("users as u")
         .leftJoin("children as c", "c.user_id", "u.id")
-        .select("u.username", "u.id as user_id", "c.name as child_name")
+        .select("u.username", "u.id as user_id", "c.name as child")
         .where({ user_id })
 }
 
