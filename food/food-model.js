@@ -1,16 +1,16 @@
 const db = require("../data/dbConfig")
 
-function getAllChildrensFoodItems() {
-    return db("food_items as fi")
-        .leftJoin("food_category AS fc", "fc.id", "fi.id")
-        .leftJoin("children_food_item AS cfi", "cfi.food_id", "fi.id")
+function getChildrenFoodItems() {
+    return db("children_food_item as cfi")
+        .leftJoin("food_items as f", "f.id", "cfi.food_id")
         .select("*")
 }
 
-function getChildFoodItems(id) {
-    return db("food_items as fi")
-        .where({ id })
-        .first()
+function getChildFoodItems(child_id) {
+    return db("children_food_item as cfi")
+    .join("food_items as f", "f.id", "cfi.food_id")
+    .where({ child_id })
+    .select("*")
 }
 
 async function addChildFoodItem() {
@@ -19,7 +19,7 @@ async function addChildFoodItem() {
 }
 
 module.exports = {
-    getAllChildrensFoodItems,
+    getChildrenFoodItems,
     getChildFoodItems,
     addChildFoodItem
 }
