@@ -1,7 +1,20 @@
 const express = require("express");
+require("dotenv").config()
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+
+const authRouter = require("../auth/auth-router");
+const usersRouter = require("../users/user-router");
+
+const authenticate = require("../auth/authenticate-middleware.js");
+const {
+    sanityCheck,
+    wrongRoute,
+    errorHandler,
+    checkUserExistance,
+    usernameExists
+} = require("../middleware")
 
 const server = express();
 
@@ -10,18 +23,11 @@ server.use(cors());
 server.use(morgan("dev"));
 server.use(express.json());
 
-server.get('/', (req, res, next) => {
-    res.json({
-        message: "Welcome to the Gigapets API"
-    })
-})
+server.use("/api/auth", checkUserExistance, usernameExists, authRouter);
+server.use("/api/users", authenticate(), usersRouter);
 
-server.use((err, req, res, next) => {
-    console.log("Error:", err)
-
-    res.status(500).json({
-        message: "There was a problem with the server..."
-    })
-})
+server.get('/', sanityCheck)
+server.use(wrongRoute)
+server.use(errorHandler)
 
 module.exports = server;

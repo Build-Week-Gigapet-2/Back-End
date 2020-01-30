@@ -5,6 +5,17 @@ exports.up = async function(knex) {
         table.string("password", 255).notNullable()
     });
 
+    await knex.schema.createTable("children", (table) => {
+        table.increments("id")
+        table.string("name").notNullable
+        table.integer("user_id")
+            .notNullable()
+            .references("id")
+            .inTable("users")
+            .onUpdate("CASCADE")
+            .onDelete("CASCADE")
+    })
+
     await knex.schema.createTable("food_category", (table) => {
         table.increments("id")
         table.string("name").notNullable()
@@ -22,11 +33,11 @@ exports.up = async function(knex) {
             .onUpdate("CASCADE")
     })
 
-    await knex.schema.createTable("users_foodsub", (table) => {
-        table.integer("user_id")
+    await knex.schema.createTable("children_food_item", (table) => {
+        table.integer("child_id")
             .notNullable()
             .references("id")
-            .inTable("users")
+            .inTable("children")
             .onDelete("CASCADE")
             .onUpdate("CASCADE")
         table.integer("food_id")
@@ -35,14 +46,18 @@ exports.up = async function(knex) {
             .inTable("food_items")
             .onDelete("CASCADE")
             .onUpdate("CASCADE")
-        table.date("date").notNullable()
-        table.primary(["user_id", "food_id"])
+        table.timestamp('created_at').defaultTo(knex.fn.now())
+        table.timestamp('updated_at').defaultTo(knex.fn.now())
+        table.string("unit_measurement").notNullable()
+        table.float("quantity").notNullable()
+        table.primary(["child_id", "food_id"])
     })
 };
 
 exports.down = async function(knex) {
-    await knex.schema.dropTableIfExists("users_foodsub")
+    await knex.schema.dropTableIfExists("children_food_item")
     await knex.schema.dropTableIfExists("food_items")
     await knex.schema.dropTableIfExists("food_category")
+    await knex.schema.dropTableIfExists("children")
     await knex.schema.dropTableIfExists("users")
 }
