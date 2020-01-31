@@ -6,14 +6,14 @@ function findUserChildren(user_id) {
 
     return db("users as u")
         .leftJoin("children as c", "c.user_id", "u.id")
-        .select("u.username", "u.id as user_id", "c.name as child")
+        .select("u.id as user_id", "u.username", "c.id as child_id", "c.name as child")
         .where({ user_id })
 }
 
 function findUsersChildById(user_id) {
     return db("children as c")
         .join("users as u", "u.id", "c.user_id")
-        .select("c.id", "c.name")
+        .select("u.id", "c.id", "c.name as child")
         .where({ user_id })
         .first()
 }
