@@ -38,7 +38,7 @@ module.exports = {
     client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: "./data/dbConfig.js"
+      filename: "./data/gigapets.db3"
     },
     migrations: {
       directory: './data/migrations',
