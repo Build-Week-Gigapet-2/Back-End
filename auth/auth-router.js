@@ -10,7 +10,7 @@ router.post('/register', async (req, res, next) => {
   
       res.status(201).json(newUser)
     } catch(err) {
-      next(err)
+      res.json(400).json({ message: "Failed to Register User, please try again later"})
     }
   });
 

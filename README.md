@@ -24,6 +24,23 @@
   - GET All Users Children
     - url: "/api/users/:id/children"
     - success response will have an array of all of the user's children who's token is passed through the header.
- - GET Users Child by child_id
+ - GET Users Child by Id
     - url: "/api/users/:id/children/:id"
     - successful response will give back a user's specific child by id.
+ - POST New Child 
+    - url: "/api/users/:id/children"
+    - body: 
+    {
+        "user_id": "",
+        "name": ""
+    }
+    - successful response will give back a user's new
+    child
+ - DELETE Child
+   - url: "/api/users/:id/children/:id"
+   - successful response will return json message "Child has been successfully deleted" 
+
+## Childrens Food
+
+ - GET Users Children's Food By Id
+  - url: "/api/users/:id/children/:id/food"

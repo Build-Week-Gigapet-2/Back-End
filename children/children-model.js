@@ -23,8 +23,13 @@ async function addChild(data) {
     return db("children").where({ id }).first()
 }
 
+function removeChild(id) {
+    return db("children").where({ id }).del()
+}
+
 module.exports = {
     findUserChildren,
     findUsersChildById,
-    addChild
+    addChild,
+    removeChild
 }
