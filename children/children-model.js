@@ -1,6 +1,6 @@
 const db = require("../data/dbConfig")
 
-function findUserChildren(user_id) {
+function find(user_id) {
     // SELECT u.username, u.id as user_id, c.name as child_name FROM users AS u
     // JOIN children AS c ON c.user_id = u.id;
 
@@ -10,26 +10,35 @@ function findUserChildren(user_id) {
         .where({ user_id })
 }
 
-function findUsersChildById(user_id) {
+function findById(child_id) {
     return db("children as c")
         .join("users as u", "u.id", "c.user_id")
-        .select("u.id", "c.id", "c.name as child")
-        .where({ user_id })
+        .select("u.id as user_id", "c.id as child_id", "c.name as child")
+        .where({ child_id })
         .first()
 }
 
-async function addChild(data) {
+async function add(data) {
     const [id] = await db("children").insert(data)
     return db("children").where({ id }).first()
 }
 
-function removeChild(id) {
+async function update(id, changes){
+    await db("children as c")
+        .where({ id })
+        .update(changes)
+
+    return findById(id)
+}
+
+function remove(id) {
     return db("children").where({ id }).del()
 }
 
 module.exports = {
-    findUserChildren,
-    findUsersChildById,
-    addChild,
-    removeChild
+    find,
+    findById,
+    add,
+    update,
+    remove
 }

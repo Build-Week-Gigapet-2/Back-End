@@ -1,25 +1,27 @@
 const db = require("../data/dbConfig")
 
-function getChildrenFoodItems() {
-    return db("children_food_item as cfi")
+// SELECT * FROM children AS c
+// JOIN children_food_item AS cfi ON cfi.child_id = c.id
+// JOIN food_items AS f ON f.id = cfi.food_id;
+
+function getChildrenFoodItems(user_id) {
+    return db("children as c")
+        .leftJoin("children_food_item as cfi", "cfi.child_id", "c.id")
         .leftJoin("food_items as f", "f.id", "cfi.food_id")
         .select("*")
+        .where({ user_id })
 }
 
-function getChildFoodItems(child_id) {
+function getFoodItems(child_id) {
     return db("children_food_item as cfi")
     .join("food_items as f", "f.id", "cfi.food_id")
     .where({ child_id })
     .select("*")
 }
 
-async function addChildFoodItem() {
-    const [id] = await db("food_items").insert(data)
-    return db("food_items").where({ id }).first()
-}
+
 
 module.exports = {
     getChildrenFoodItems,
-    getChildFoodItems,
-    addChildFoodItem
+    getFoodItems,
 }

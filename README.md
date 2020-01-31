@@ -42,5 +42,9 @@
 
 ## Childrens Food
 
- - GET Users Children's Food By Id
+ - GET Users Children's Food Item
   - url: "/api/users/:id/children/:id/food"
+  - successful response will return a user's children's food items
+ - GET Users Child Food Item By Id 
+  - url: "/api/users/:id/children/:id/food/:id"
+  - successful response will return a users's specific child food item by id 

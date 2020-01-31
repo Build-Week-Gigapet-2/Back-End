@@ -13,7 +13,7 @@ const {
     wrongRoute,
     errorHandler,
     checkUserExistance,
-    usernameExists
+    usernameExists,
 } = require("../middleware")
 
 const server = express();
