@@ -14,12 +14,10 @@ function getChildrenFoodItems(user_id) {
 
 function getFoodItems(child_id) {
     return db("children_food_item as cfi")
-    .join("food_items as f", "f.id", "cfi.food_id")
+    .leftJoin("food_items as f", "f.id", "cfi.food_id")
     .where({ child_id })
     .select("*")
 }
-
-
 
 module.exports = {
     getChildrenFoodItems,
