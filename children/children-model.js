@@ -19,16 +19,8 @@ function findById(child_id) {
 }
 
 async function add(data) {
-    const [id] = await db("children").insert(data)
+    const [id] = await db("children").insert(data, 'id')
     return db("children").where({ id }).first()
-}
-
-async function update(id, changes){
-    await db("children as c")
-        .where({ id })
-        .update(changes)
-
-    return findById(id)
 }
 
 function remove(id) {
@@ -39,6 +31,5 @@ module.exports = {
     find,
     findById,
     add,
-    update,
     remove
 }

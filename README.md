@@ -27,6 +27,7 @@
  - GET Users Child by Id
     - url: "/api/users/:id/children/:id"
     - successful response will give back a user's specific child by id.
+    
  - POST New Child 
     - url: "/api/users/:id/children"
     - body: 
@@ -36,6 +37,7 @@
     }
     - successful response will give back a user's new
     child
+
  - DELETE Child
    - url: "/api/users/:id/children/:id"
    - successful response will return json message "Child has been successfully deleted" 
@@ -48,3 +50,34 @@
  - GET Users Child Food Item By Id 
    - url: "/api/users/:id/children/:id/food/:id"
    - successful response will return a users's specific child food item by id 
+
+## Food
+
+- GET All Food Items
+  - url: "/api/food"
+  - successful response will return all food items in the database
+- GET Food Items By Id
+  - url: "/api/food/:id"
+  - successful response will return food items by id
+- GET Food Categories
+  - url: "/api/food/c"
+  - successful response will return food categories
+- GET Food Category By Id
+  - url: "/api/food/c/:id"
+  - successful respone will return a category by id
+
+- POST New Food Item
+  - url: "/api/food"
+  - body: 
+    {
+        "name": "",
+        "category_id": ""
+    }
+  - successful response will add a new food item to the database
+- POST New Category
+ - url: "/api/food/c"
+ - successful response will add a new category
+
+- DELETE Food Item
+  - url: "/api/food/:id"
+  - successful response will return json message: "Food Item successfully deleted"
