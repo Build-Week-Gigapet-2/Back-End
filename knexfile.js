@@ -36,7 +36,6 @@ module.exports = {
 
   production: {
     client: "sqlite3",
-    useNullAsDefault: true,
     connection: {
       filename: "./data/gigapets.db3"
     },
