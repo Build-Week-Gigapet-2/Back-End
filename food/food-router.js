@@ -22,6 +22,21 @@ router.get("/c", async (req, res, next) => {
     }
 })
 
+router.get("/c/:id", async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const food_cat = await foodModel.getCategoryById(id)
+
+        if(food_cat) {
+        res.status(200).json(food_cat)
+        } else {
+        res.status(404).json({ message: "Category not found"})
+        }
+    } catch(err) {
+        next(err)
+    }
+})
+
 router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params
@@ -38,6 +53,15 @@ router.post("/", async (req, res, next) => {
     try {
         const food_item = await foodModel.addFoodItem(req.body)
         res.status(201).json(food_item)
+    } catch(err) {
+        next(err)
+    }
+})
+
+router.post("/c", async (req, res, next) => {
+    try {
+        const food_cat = await foodModel.addCategory(req.body)
+        res.status(201).json(food_cat)
     } catch(err) {
         next(err)
     }

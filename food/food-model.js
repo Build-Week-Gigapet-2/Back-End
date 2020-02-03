@@ -31,12 +31,21 @@ function delFoodItem(id) {
     return db("food_items").where({ id }).del()
 }
 
-function getFoodCategory() {
+function getCategory() {
     // SELECT * FROM food_items AS fi
     // JOIN food_category AS fc WHERE fc.id = fi.category_id;
 
     return db("food_category as fc")
     .select("*")
+}
+
+function getCategoryById(id) {
+    return db("food_category").where({ id }).first()
+}
+
+async function addCategory(food_cat) {
+    const [id] = await db("food_category").insert(food_cat, 'id')
+    return getCategoryById(id)
 }
 
 function getChildrenFoodItems(user_id) {
@@ -61,7 +70,9 @@ module.exports = {
     addFoodItem,
     updateFoodItem,
     delFoodItem,
-    getFoodCategory,
+    getCategory,
+    getCategoryById,
+    addCategory,
     getChildrenFoodItems,
     getFoodItems,
 }
