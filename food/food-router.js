@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/c", async (req, res, next) => {
     try {
-        const food_cat = await foodModel.getFoodCategory()
+        const food_cat = await foodModel.getCategory()
 
         res.status(200).json(food_cat)
     } catch(err) {
