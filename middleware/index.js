@@ -31,10 +31,19 @@ async function usernameExists(req, res, next) {
     next();
 }
 
+function redirectLogin(req, res, next) {
+        if(!req.session.accessToken) {
+            res.redirect('/login');
+        } else {
+            next();
+        }
+}
+
 module.exports = {
     sanityCheck,
     wrongRoute,
     errorHandler,
     checkUserExistance,
-    usernameExists
+    usernameExists,
+    redirectLogin,
 }
