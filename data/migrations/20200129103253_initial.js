@@ -26,11 +26,11 @@ exports.up = async function(knex) {
         table.string("name")
         
         table.integer("category_id")
-            .notNullable()
-            .references("id")
-            .inTable("food_category")
-            .onDelete("CASCADE")
-            .onUpdate("CASCADE")
+        .notNullable()
+        .references("id")
+        .inTable("food_category")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
     })
 
     await knex.schema.createTable("children_food_item", (table) => {
