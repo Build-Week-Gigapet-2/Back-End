@@ -20,10 +20,11 @@ exports.up = async function(knex) {
         table.increments("id")
         table.string("name").notNullable()
     })
-
+    
     await knex.schema.createTable("food_items", (table) => {
         table.increments("id")
         table.string("name")
+        table.string("date")
         
         table.integer("category_id")
         .notNullable()
