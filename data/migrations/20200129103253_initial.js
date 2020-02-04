@@ -24,7 +24,9 @@ exports.up = async function(knex) {
     await knex.schema.createTable("food_items", (table) => {
         table.increments("id")
         table.string("name")
-        table.string("date")
+        table.string("date").notNullable().defaultTo(knex.fn.now())
+        table.string("unit_measurement").notNullable()
+        table.float("quantity").notNullable()
         
         table.integer("category_id")
         .notNullable()
@@ -49,8 +51,6 @@ exports.up = async function(knex) {
             .onUpdate("CASCADE")
         table.timestamp('created_at').defaultTo(knex.fn.now())
         table.timestamp('updated_at').defaultTo(knex.fn.now())
-        table.string("unit_measurement").notNullable()
-        table.float("quantity").notNullable()
         table.primary(["child_id", "food_id"])
     })
 };
