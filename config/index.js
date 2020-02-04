@@ -4,7 +4,7 @@ const sessionConfig = {
     cookie: {
       maxAge: 1000 * 60 * 60,
       secure: false,
-      httpOnly: true,
+      httpOnly: false,
     },
     resave: false,
     saveUninitialized: true,
