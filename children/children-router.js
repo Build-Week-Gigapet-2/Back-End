@@ -63,6 +63,21 @@ router.get("/:id/food/:id", async(req, res, next) => {
     }
 })
 
+router.put("/:id", async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const updateChild = await childrenModel.update(id)
+        
+        if(updateChild) {
+            res.status(200).json(updateChild)
+        } else {
+            res.status(500).json({ message: "Server Error, could not update child" })
+        } 
+    } catch(err) {
+        next(err)
+    }
+})
+
 router.delete("/:id", async(req, res) => {
     try {
     const { id } = req.params;

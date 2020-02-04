@@ -23,6 +23,14 @@ async function add(data) {
     return db("children").where({ id }).first()
 }
 
+async function update(id, payload){
+    await db("children")
+        .where({ user_id: id })
+        .update(payload)
+
+    return findById(id)
+}
+
 function remove(id) {
     return db("children").where({ id }).del()
 }
@@ -31,5 +39,6 @@ module.exports = {
     find,
     findById,
     add,
+    update,
     remove
 }
