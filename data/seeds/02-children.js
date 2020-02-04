@@ -1,4 +1,5 @@
 exports.seed = async function(knex) {
+  await knex("children").del()
   await knex("children").insert([
     { name: "child_1", user_id: 1 },
     { name: "child_2", user_id: 1 },

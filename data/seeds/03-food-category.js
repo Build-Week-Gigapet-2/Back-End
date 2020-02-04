@@ -1,4 +1,5 @@
 exports.seed = async (knex) => {
+  await knex("food_category").del()
   await knex("food_category").insert([
     { id: 1, name: "Fruit" },
     { id: 2, name: "Vegetable" },
