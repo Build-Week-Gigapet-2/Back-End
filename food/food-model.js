@@ -7,7 +7,7 @@ const db = require("../data/dbConfig")
 function getAllFoodItems() {
     return db("food_items as f")
     .leftJoin("food_category as fc", "fc.id", "f.category_id")
-    .select("f.id", "f.name", "f.category_id", "fc.name as category")
+    .select("f.id", "f.name", "f.category_id", "f.date", "f.quantity", "f.unit_measurement", "fc.name as category")
 }
 
 function getFoodItemById(id) {
