@@ -5,12 +5,15 @@ const jwt = require("jsonwebtoken");
 const secrets = require("../config/secrets");
 
 router.post('/register', async (req, res, next) => {
+    const { username, password } = req.body;
+    
     try {
-      const newUser = await userModel.addUser(req.body)
-  
-      res.status(201).json(newUser)
+        const newUser = await userModel.addUser({ username, password })
+        res.status(201).json(newUser)
+
     } catch(err) {
-      next(err)
+        res.status(500).json({ message: "Unable to register user" })
+        next(err)
     }
   });
 
@@ -19,7 +22,7 @@ router.post("/login", async (req, res, next) => {
         const { username, password } = req.body;
         const user = await userModel.findBy({ username }).first();
         
-        if(user) { 
+        if(req.user) { 
             const passwordValid = bcrypt.compare(password, req.user.password);
             
             if(passwordValid) {
