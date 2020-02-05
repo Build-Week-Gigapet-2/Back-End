@@ -8,9 +8,17 @@ router.post('/register', async (req, res, next) => {
     const { username, password } = req.body;
     
     try {
+        const user = await userModel.findBy({ username }).first()
+        
+        if(!username || !password) {
+            res.status(401).json({ message: "Username & Password Required" })
+        } else if (user) {
+            res.status(401).json({ message: "User already exists, please use a different username" })
+        } else {
         const newUser = await userModel.addUser({ username, password })
-        res.status(201).json(newUser)
 
+        res.status(200).json({ message: `User ${user.username} successfully registered!`}, newUser)
+        }
     } catch(err) {
         res.status(500).json({ message: "Unable to register user" })
         next(err)
