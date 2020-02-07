@@ -5,12 +5,23 @@ const jwt = require("jsonwebtoken");
 const secrets = require("../config/secrets");
 
 router.post('/register', async (req, res, next) => {
+    const { username, password } = req.body;
+    
     try {
-      const newUser = await userModel.addUser(req.body)
-  
-      res.status(201).json(newUser)
+        const user = await userModel.findBy({ username }).first()
+        
+        if(!username || !password) {
+            res.status(401).json({ message: "Username & Password Required" })
+        } else if (user) {
+            res.status(401).json({ message: "User already exists, please use a different username" })
+        } else {
+        const newUser = await userModel.addUser({ username, password })
+
+        res.status(200).json({ message: `User successfully registered!`}, newUser)
+        }
     } catch(err) {
-      next(err)
+        res.status(500).json({ message: "Unable to register user" })
+        next(err)
     }
   });
 
@@ -19,7 +30,7 @@ router.post("/login", async (req, res, next) => {
         const { username, password } = req.body;
         const user = await userModel.findBy({ username }).first();
         
-        if(user) { 
+        if(req.user) { 
             const passwordValid = bcrypt.compare(password, req.user.password);
             
             if(passwordValid) {

@@ -7,7 +7,7 @@ const db = require("../data/dbConfig")
 function getAllFoodItems() {
     return db("food_items as f")
     .leftJoin("food_category as fc", "fc.id", "f.category_id")
-    .select("f.id", "f.name", "f.category_id", "fc.name as category")
+    .select("f.id", "f.name", "f.category_id", "f.date", "f.quantity", "f.unit_measurement", "fc.name as category")
 }
 
 function getFoodItemById(id) {
@@ -15,16 +15,17 @@ function getFoodItemById(id) {
 }
 
 async function addFoodItem(food_item) {
-    const [id] = await db("food_items").insert(food_item, 'id')
+    const [id] = await db("food_items")
+        .insert(food_item, 'id')
+        .returning("*")
     return getFoodItemById(id)
 }
 
-async function updateFoodItem(id, changes) {
+async function updateFoodItem(id, food_item) {
     await db("food_items")
         .where({ id })
-        .update(changes)
-
-    return getFoodItemById(id)
+        .update(food_item)
+        .returning("*")
 }
 
 function delFoodItem(id) {

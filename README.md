@@ -71,7 +71,10 @@
   - body: 
     {
         "name": "",
-        "category_id": ""
+        "category_id": "",
+        "date": "MM-DD-YYYY",
+        "quantity": "",
+        "unit_measurement": ""
     }
   - successful response will add a new food item to the database
 - POST New Category
