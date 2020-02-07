@@ -15,16 +15,17 @@ function getFoodItemById(id) {
 }
 
 async function addFoodItem(food_item) {
-    const [id] = await db("food_items").insert(food_item, 'id')
+    const [id] = await db("food_items")
+        .insert(food_item, 'id')
+        .returning("*")
     return getFoodItemById(id)
 }
 
-async function updateFoodItem(id, changes) {
+async function updateFoodItem(id, food_item) {
     await db("food_items")
         .where({ id })
-        .update(changes)
-
-    return getFoodItemById(id)
+        .update(food_item)
+        .returning("*")
 }
 
 function delFoodItem(id) {
