@@ -35,8 +35,10 @@ module.exports = {
   },
 
   production: {
-    client: "pg",
-    connection: process.env.DATABASE_URL,
+    client: "sqlite3",
+    connection: {
+      filename: "./data/gigapets.db3"
+    },
     migrations: {
       directory: './data/migrations',
     },
