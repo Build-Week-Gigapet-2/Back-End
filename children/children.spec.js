@@ -1,7 +1,7 @@
 const childrenModel = require("./children-model");
 const db = require("../data/dbConfig");
 
-beforeEach(async () => {
+beforeAll(async () => {
     await db.seed.run()
 })
 
