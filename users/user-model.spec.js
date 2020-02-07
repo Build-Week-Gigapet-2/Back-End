@@ -6,8 +6,8 @@ beforeEach(async () => {
 })
 
 describe("User Model", () => {
-    test("get Users", async() => {
-        const res = await userModel.findUsers()
-        expect(res.length).toBe(3)
+    test("get Users by id", async() => {
+        const res = await userModel.findUserById(1)
+        expect(res.username).toBe("test1")
     })
 })

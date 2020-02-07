@@ -1,7 +1,7 @@
-const cleaner = require('knex-cleaner');
-exports.seed = function(knex) {
-  return cleaner.clean(knex, {
-    mode: 'truncate',
-    ignoreTables: ['knex_migrations', 'knex_migrations_lock'],
-  });
-};
+exports.seed = async function(knex) {
+  await knex("children_food_item").truncate()
+  await knex("food_items").truncate()
+  await knex("food_category").truncate()
+  await knex("children").truncate()
+  await knex("users").truncate()
+}

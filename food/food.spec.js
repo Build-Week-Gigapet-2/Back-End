@@ -10,10 +10,4 @@ describe("Food Model", () => {
         const res = await foodModel.getChildrenFoodItems(1)
         expect(res.length).toBeGreaterThan(0)
     })
-
-    test("get Child Food Item", async() => {
-        const res = await foodModel.getFoodItems(1)
-        expect(res).toBeDefined() 
-        
-    })
 })
